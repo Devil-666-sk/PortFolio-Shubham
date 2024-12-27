@@ -3,6 +3,7 @@ import Particles, { initParticlesEngine } from '@tsparticles/react';
 import { loadFull } from 'tsparticles';
 import particlesOptions from './particles.json';
 import ResponsiveNavbar from './Components/Navbar/Navbar';
+import Hero from './Components/Hero/Hero';
 
 function App() {
   const [init, setInit] = useState(false);
@@ -25,6 +26,7 @@ function App() {
         {init && <Particles options={particlesOptions} />}
       </div>
       <ResponsiveNavbar />
+      <Hero />
     </>
   );
 }
