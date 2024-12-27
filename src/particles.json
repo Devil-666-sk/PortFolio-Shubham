@@ -29,7 +29,7 @@
       "value": "#ffffff"
     },
     "links": {
-      "color": "#ffffff",
+      "color": "#fff",
       "distance": 150,
       "enable": true,
       "opacity": 0.5,
@@ -58,7 +58,7 @@
       "value": 0.5
     },
     "shape": {
-      "type": "circle"
+      "type": "star"
     },
     "size": {
       "random": true,
