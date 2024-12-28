@@ -1,6 +1,6 @@
 {
   "background": {
-    "color": "#282c34"
+    "color": ""
   },
   "interactivity": {
     "events": {
@@ -29,7 +29,7 @@
       "value": "#ffffff"
     },
     "links": {
-      "color": "#fff",
+      "color": "#FAFAFA",
       "distance": 150,
       "enable": true,
       "opacity": 0.5,

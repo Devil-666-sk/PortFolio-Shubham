@@ -1,227 +1,161 @@
-import React, { useState } from 'react';
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-  IconButton,
-  CssBaseline,
-  Box,
-  Drawer,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  Collapse,
-//   Switch,
-  Divider,
-} from '@mui/material';
-import {
-  Dashboard as DashboardIcon,
-  ShoppingCart as ShoppingCartIcon,
-  BarChart as BarChartIcon,
-  Description as DescriptionIcon,
-  Layers as LayersIcon,
-  ExpandLess,
-  ExpandMore,
-  Menu as MenuIcon,
-  Brightness4 as Brightness4Icon,
-  Brightness7 as Brightness7Icon,
-} from '@mui/icons-material';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import Grid from '@mui/material/Grid2';
+import * as React from 'react';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import Menu from '@mui/material/Menu';
+import MenuIcon from '@mui/icons-material/Menu';
+import Container from '@mui/material/Container';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import Tooltip from '@mui/material/Tooltip';
+import MenuItem from '@mui/material/MenuItem';
+import AdbIcon from '@mui/icons-material/Adb';
 
-// Sidebar navigation items
-const NAVIGATION = [
-  { title: 'Dashboard', icon: <DashboardIcon />, path: '/dashboard' },
-  { title: 'Orders', icon: <ShoppingCartIcon />, path: '/orders' },
-  { kind: 'divider' },
-  { kind: 'header', title: 'Analytics' },
-  {
-    title: 'Reports',
-    icon: <BarChartIcon />,
-    children: [
-      { title: 'Sales', icon: <DescriptionIcon />, path: '/reports/sales' },
-      { title: 'Traffic', icon: <DescriptionIcon />, path: '/reports/traffic' },
-    ],
-  },
-  { title: 'Integrations', icon: <LayersIcon />, path: '/integrations' },
-];
+const pages = ['Products', 'Pricing', 'Blog'];
+const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-export default function ResponsiveNavbar() {
-  const [darkMode, setDarkMode] = useState(false); // Day/Night mode toggle
-  const [open, setOpen] = useState(true); // Sidebar collapse state
-  const [subMenuOpen, setSubMenuOpen] = useState(false); // Reports submenu state
+function ResponsiveAppBar() {
+  const [anchorElNav, setAnchorElNav] = React.useState(null);
+  const [anchorElUser, setAnchorElUser] = React.useState(null);
 
-  const theme = createTheme({
-    palette: {
-      mode: darkMode ? 'dark' : 'light',
-    },
-  });
+  const handleOpenNavMenu = (event) => {
+    setAnchorElNav(event.currentTarget);
+  };
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget);
+  };
 
-  const toggleTheme = () => setDarkMode((prev) => !prev);
-  const toggleSubMenu = () => setSubMenuOpen((prev) => !prev);
+  const handleCloseNavMenu = () => {
+    setAnchorElNav(null);
+  };
+
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
+  };
 
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <Box sx={{ display: 'flex' }}>
-        {/* Sidebar */}
-        <Drawer
-          variant='persistent'
-          open={open}
-          sx={{
-            '& .MuiDrawer-paper': {
-              width: 240,
-              boxSizing: 'border-box',
-            },
-          }}
-        >
-          <Toolbar>
-            <Typography variant='h6' noWrap>
-              Toolpad
-            </Typography>
-          </Toolbar>
-          <Divider />
-          <List>
-            {NAVIGATION.map((item, index) =>
-              item.kind === 'divider' ? (
-                <Divider key={index} />
-              ) : item.kind === 'header' ? (
-                <Typography
-                  key={index}
-                  variant='subtitle2'
-                  sx={{ px: 2, mt: 1, mb: 0.5 }}
-                >
-                  {item.title}
-                </Typography>
-              ) : item.children ? (
-                <React.Fragment key={index}>
-                  <ListItemButton onClick={toggleSubMenu}>
-                    <ListItemIcon>{item.icon}</ListItemIcon>
-                    <ListItemText primary={item.title} />
-                    {subMenuOpen ? <ExpandLess /> : <ExpandMore />}
-                  </ListItemButton>
-                  <Collapse in={subMenuOpen} timeout='auto' unmountOnExit>
-                    <List component='div' disablePadding>
-                      {item.children.map((child, childIndex) => (
-                        <ListItem key={childIndex} disablePadding>
-                          <ListItemButton sx={{ pl: 4 }}>
-                            <ListItemIcon>{child.icon}</ListItemIcon>
-                            <ListItemText primary={child.title} />
-                          </ListItemButton>
-                        </ListItem>
-                      ))}
-                    </List>
-                  </Collapse>
-                </React.Fragment>
-              ) : (
-                <ListItem key={index} disablePadding>
-                  <ListItemButton>
-                    <ListItemIcon>{item.icon}</ListItemIcon>
-                    <ListItemText primary={item.title} />
-                  </ListItemButton>
-                </ListItem>
-              )
-            )}
-          </List>
-        </Drawer>
+    <AppBar position='static'>
+      <Container maxWidth='xl'>
+        <Toolbar disableGutters>
+          <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+          <Typography
+            variant='h6'
+            noWrap
+            component='a'
+            href='#app-bar-with-responsive-menu'
+            sx={{
+              mr: 2,
+              display: { xs: 'none', md: 'flex' },
+              fontFamily: 'monospace',
+              fontWeight: 700,
+              letterSpacing: '.3rem',
+              color: '#313131',
+              textDecoration: 'none',
+            }}
+          >
+           PortFolio
+          </Typography>
 
-        {/* Main Content */}
-        <Box
-          component='main'
-          sx={{
-            flexGrow: 1,
-            p: 3,
-            backgroundColor: theme.palette.background.default,
-          }}
-        >
-          <AppBar position='fixed' sx={{ zIndex: theme.zIndex.drawer + 1 }}>
-            <Toolbar>
-              <IconButton
-                edge='start'
-                color='inherit'
-                onClick={() => setOpen(!open)}
+          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+            <IconButton
+              size='large'
+              aria-label='account of current user'
+              aria-controls='menu-appbar'
+              aria-haspopup='true'
+              onClick={handleOpenNavMenu}
+              color='#313131'
+            >
+              <MenuIcon />
+            </IconButton>
+            <Menu
+              id='menu-appbar'
+              anchorEl={anchorElNav}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'left',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'left',
+              }}
+              open={Boolean(anchorElNav)}
+              onClose={handleCloseNavMenu}
+              sx={{ display: { xs: 'block', md: 'none' } }}
+            >
+              {pages.map((page) => (
+                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                  <Typography sx={{ textAlign: 'center' }}>{page}</Typography>
+                </MenuItem>
+              ))}
+            </Menu>
+          </Box>
+          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+          <Typography
+            variant='h5'
+            noWrap
+            component='a'
+            href='#app-bar-with-responsive-menu'
+            sx={{
+              mr: 2,
+              display: { xs: 'flex', md: 'none' },
+              flexGrow: 1,
+              fontFamily: 'monospace',
+              fontWeight: 700,
+              letterSpacing: '.3rem',
+              color: '#313131',
+              textDecoration: 'none',
+            }}
+          >
+            LOGO
+          </Typography>
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+            {pages.map((page) => (
+              <Button
+                key={page}
+                onClick={handleCloseNavMenu}
+                sx={{ my: 2, color: 'white', display: 'block' }}
               >
-                <MenuIcon />
+                {page}
+              </Button>
+            ))}
+          </Box>
+          <Box sx={{ flexGrow: 0 }}>
+            <Tooltip title='Open settings'>
+              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                <Avatar alt='Remy Sharp' src='/static/images/avatar/2.jpg' />
               </IconButton>
-              <Typography variant='h6' sx={{ flexGrow: 1 }}>
-                Dashboard
-              </Typography>
-              <IconButton color='inherit' onClick={toggleTheme}>
-                {darkMode ? <Brightness7Icon /> : <Brightness4Icon />}
-              </IconButton>
-            </Toolbar>
-          </AppBar>
-          <Toolbar />
-          {/* Dashboard Content */}
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={6} md={4}>
-              <Box
-                sx={{
-                  backgroundColor: theme.palette.action.hover,
-                  height: 100,
-                  borderRadius: 1,
-                }}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6} md={8}>
-              <Box
-                sx={{
-                  backgroundColor: theme.palette.action.hover,
-                  height: 100,
-                  borderRadius: 1,
-                }}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <Box
-                sx={{
-                  backgroundColor: theme.palette.action.hover,
-                  height: 150,
-                  borderRadius: 1,
-                }}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6} md={3}>
-              <Box
-                sx={{
-                  backgroundColor: theme.palette.action.hover,
-                  height: 100,
-                  borderRadius: 1,
-                }}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6} md={3}>
-              <Box
-                sx={{
-                  backgroundColor: theme.palette.action.hover,
-                  height: 100,
-                  borderRadius: 1,
-                }}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6} md={3}>
-              <Box
-                sx={{
-                  backgroundColor: theme.palette.action.hover,
-                  height: 100,
-                  borderRadius: 1,
-                }}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6} md={3}>
-              <Box
-                sx={{
-                  backgroundColor: theme.palette.action.hover,
-                  height: 100,
-                  borderRadius: 1,
-                }}
-              />
-            </Grid>
-          </Grid>
-        </Box>
-      </Box>
-    </ThemeProvider>
+            </Tooltip>
+            <Menu
+              sx={{ mt: '45px' }}
+              id='menu-appbar'
+              anchorEl={anchorElUser}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              open={Boolean(anchorElUser)}
+              onClose={handleCloseUserMenu}
+            >
+              {settings.map((setting) => (
+                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                  <Typography sx={{ textAlign: 'center' }}>
+                    {setting}
+                  </Typography>
+                </MenuItem>
+              ))}
+            </Menu>
+          </Box>
+        </Toolbar>
+      </Container>
+    </AppBar>
   );
 }
+export default ResponsiveAppBar;
