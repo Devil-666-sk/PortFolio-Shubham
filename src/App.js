@@ -8,7 +8,7 @@ function App() {
     <>
       <ResponsiveNavbar />
       <Hero />
-      <Project />
+      {/* <Project /> */}
     </>
   );
 }
